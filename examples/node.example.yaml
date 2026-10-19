@@ -1,0 +1,29 @@
+# 一个带下游委派与质量门禁的入口节点示例
+id: entry
+type: ai
+name: 入口节点
+description: 判断请求是直接回答还是交给下游
+model: gpt-4o-mini
+output: quality_gate
+
+tool_access:
+  mode: all
+tool_mode: native
+
+skills:
+  mode: keyword
+
+memories: default
+
+delegate_targets:
+  - coder
+  - researcher
+
+prompt:
+  - role: system
+    content: |
+      你是入口节点。先判断用户请求属于哪一类：
+      - 简单问答：直接回答
+      - 需要写代码：委派给 coder
+      - 需要检索资料：委派给 researcher
+      委派时给下游完整上下文，不要只传一句话。

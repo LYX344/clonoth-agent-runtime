@@ -1,0 +1,7 @@
+Clonoth Agent Runtime
+
+本项目的架构与部分实现思路来自 HCPTangHY/Clonoth：
+https://github.com/HCPTangHY/Clonoth
+
+上游项目遵循 GNU General Public License v3.0。
+本仓库为二次开发后的整理版本，同样遵循 GPL-3.0。

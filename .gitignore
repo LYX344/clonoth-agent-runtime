@@ -1,0 +1,12 @@
+.env
+*.pyc
+__pycache__/
+.venv/
+venv/
+data/
+output/
+backup/
+*.log
+*.sqlite
+*.db
+config/runtime.yaml

@@ -1,0 +1,37 @@
+# 脚本节点示例：不调用模型，在本地执行 Python
+id: quality_gate
+type: script
+name: 输出质检
+description: 检查禁用词、乱码、超长，不通过则退回
+output: __source__
+script_timeout_sec: 10.0
+script: |
+    import re
+
+    banned = ["示例词一", "示例词二"]
+    problems = []
+
+    if "Traceback" in text or "[Errno" in text:
+        problems.append("包含错误回显")
+
+    if "\ufffd" in text:
+        problems.append("包含乱码字符")
+
+    hits = [w for w in banned if w in text]
+    if hits:
+        problems.append("禁用词: " + ", ".join(hits))
+
+    if re.search(r"不是.{1,20}而是", text):
+        problems.append("检测到先否定再肯定句式")
+
+    if len(text) > 1500:
+        problems.append(f"超长: {len(text)} 字符")
+
+    if problems:
+        return reject(
+            "输出未通过检查，请修正以下问题后重写：\n"
+            + "\n".join(f"- {p}" for p in problems)
+            + "\n\n--- 原文 ---\n" + text
+        )
+
+    return finish(text, attachments=attachments)

@@ -1,0 +1,36 @@
+version: 1
+
+engine:
+  max_steps: 64
+  streaming: true
+  history_limit: 80
+  poll_interval_sec: 1.0
+  max_workers: 4
+
+  compact:
+    threshold_tokens: 256000
+    keep_recent: 6
+
+  turn_summary:
+    enabled: true
+    min_tool_calls: 3
+    refusal_guard: true
+
+  child_session:
+    ttl_hours: 24
+    max_per_parent: 50
+    main_session_enabled: true
+
+  retry:
+    max_retries: 3
+    initial_delay_sec: 1.0
+    max_delay_sec: 30.0
+    backoff_multiplier: 2.0
+
+  approval_timeout_sec: 120.0
+
+  tool_trace:
+    artifact_enabled: true
+    max_inline_chars:
+      default: 32000
+      read_file: 80000
